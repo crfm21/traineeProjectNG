@@ -1,0 +1,15 @@
+<nav class="navbar sticky-top navbar-light bg-light">
+  <a class="navbar-brand" [routerLink]="['/home']">Frenchy Recipe</a>
+  <div *ngIf="isLogged == true; else logIn" class="align-items-center justify-content-center">
+    <button class="btn ml-2 btn-outline-primary" [routerLink]="['home']" (click)="logOut()">Log out</button>
+    <button class="btn ml-2 btn-outline-primary" (click)="goToProfile()">Profile</button>
+  </div>
+  <ng-template #logIn>
+    <div class="align-items-center justify-content-center">
+      <button class="btn ml-2 btn-outline-primary" [routerLink]="['/signup']">Sign up</button>
+      <button class="btn ml-2 btn-outline-primary" [routerLink]="['login']">Login</button>
+    </div>
+  </ng-template>
+
+</nav>
+<router-outlet></router-outlet>

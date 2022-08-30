@@ -1,0 +1,43 @@
+<form action="" (ngSubmit)="onSubmit(commentText.value)">
+  <div class="container justify-content-center p-2 m-2">
+
+    <div class="row mb-3 justify-content-center">
+      <div class="col-6">
+        <p class="text-right">{{loggedMember.nickName}}</p>
+      </div>
+      <div class="col-6 text-align-end">
+        <p class="text-right">Member photo</p>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="input-group has-validation">
+        <input type="text" class="form-control" #commentText placeholder="Write comment here." required>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <button type="submit" [disabled]="commentText == null" class="btn btn-success">Add</button>
+    </div>
+  </div>
+</form>
+
+
+
+<!-- how to pass the data -->
+
+  <!-- <form class="was-validated" #newCommentText="ngForm" action="" (ngSubmit)="onSubmit(newCommentText.value)">
+    <div class="form-group">
+      <label for="validationTextarea">{{loggedMember.nickName}}</label>
+      <textarea [(ngModel)]="newCommentText" class="form-control is-invalid" id="validationTextarea" placeholder="Write comment here."
+        required></textarea>
+      <div class="invalid-feedback">
+        Please enter a message in the textarea.
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-success">Add</button>
+    </div>
+  </form> -->

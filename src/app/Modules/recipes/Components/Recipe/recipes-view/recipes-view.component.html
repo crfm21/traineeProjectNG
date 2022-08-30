@@ -1,0 +1,130 @@
+<div class="container p-5">
+  <div class="container m-2">
+    <div class="card">
+      <img
+        [src]="recipePhoto"
+        *ngIf="isPhotoLoaded; else noPhoto"
+        class="card-img-top"
+        alt="Your recipe photo."
+      />
+      <ng-template #noPhoto>
+        <img
+          src=""
+          style="size: 50%"
+          class="card-img-top"
+          alt="No photo uploaded."
+        />
+      </ng-template>
+      <div class="row p-3 px-lg-6 justify-content-end">
+        <span class="badge badge-primary m-2">{{
+          recipe?.categoryString
+        }}</span>
+        <span class="badge badge-info m-2">{{ recipe?.duration }}</span>
+        <span class="badge badge-success m-2"
+          >{{ recipe?.servings }} Servings</span
+        >
+        <span class="badge badge-warning m-2">{{
+          recipe?.difficultyString
+        }}</span>
+        <span class="badge badge-danger m-2">{{ recipe?.rating }} stars</span>
+      </div>
+      <!-- favorites -->
+      <div
+        class="row m-3 justify-content-between"
+        *ngIf="
+          isLogged &&
+          loggedMember.profile !== 0 &&
+          loggedMember.id !== recipe.creatorMemberId
+        "
+      >
+        <div>
+          <button
+            class="btn btn-outline-success btn-sm mr-2"
+            data-toggle="tooltip"
+            data-placement="bottom"
+            title="Add to favorites"
+            (click)="addToFav()"
+          >
+            <i class="bi bi-heart"></i>
+          </button>
+          <button
+            class="btn btn-outline-danger btn-sm mr-2"
+            data-toggle="tooltip"
+            data-placement="bottom"
+            title="Remove from favorites"
+            (click)="deleteFromFav()"
+          >
+            <i class="bi bi-heartbreak-fill"></i>
+          </button>
+        </div>
+
+        <div>
+          <label class="rating" *ngFor="let value of rateNumbers">
+            <input
+              type="radio"
+              name="options"
+              id="option1"
+              [value]="value"
+              (click)="rating(value)"
+            />
+            <!-- rever o set do rate -->
+            <i class="bi bi-star-fill"></i>
+          </label>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <h2 class="card-title">{{ recipe?.title }}</h2>
+        <div class="row justify-content-between m-2">
+          <p class="card-text">
+            {{ creatorsName }}
+          </p>
+          <small
+            class="card-text"
+            *ngIf="
+              recipe?.publishDate !== undefined && recipe?.publishDate !== null
+            "
+          >
+            Published {{ recipe.publishDate | date: "MMM d, y" }}
+          </small>
+        </div>
+      </div>
+
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">{{ recipe?.description }}</li>
+
+        <li class="list-group-item">
+          <div class="container">
+            <div class="col-xs-6">
+              <table class="table table-borderless">
+                <tr>
+                  <th>Ingredients</th>
+                  <th>Quantities</th>
+                  <th>Units</th>
+                </tr>
+                <tr *ngFor="let ingredient of ingredients">
+                  <td class="">{{ ingredient?.name }}</td>
+                  <td>{{ ingredient?.quantity }}</td>
+                  <td>{{ ingredient?.unitDescription }}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="row justify-content-center mt-5">
+      <a
+        href=""
+        [routerLink]="['/details/' + recipe.id + '/comments']"
+        (click)="onSelect()"
+        >Comments</a
+      >
+    </div>
+
+    <div>
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

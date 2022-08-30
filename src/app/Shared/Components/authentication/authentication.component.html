@@ -1,0 +1,57 @@
+<div class="container">
+  <form action="" [formGroup]="authForm" (ngSubmit)="submit()">
+    <div class="p-5">
+      <div class="form-group">
+        <label for="email">E-mail: </label>
+        <input
+          type="email"
+          formControlName="email"
+          id="email"
+          class="form-control"
+        />
+        <!-- <div
+          *ngIf="f['email'].touched && f['email'].invalid"
+          class="alert alert-danger"
+        >
+          <div *ngIf="f['email'].errors && f['email'].errors['required']">
+            E-mail is required.
+          </div>
+          <div *ngIf="f['email'].errors && f['email'].errors['email']">
+            Invalid E-mail.
+          </div>
+        </div> -->
+      </div>
+
+      <div class="form-group">
+        <label for="pass">Password: </label>
+        <input
+          type="password"
+          formControlName="password"
+          id="pass"
+          class="form-control"
+        />
+        <!-- <div
+          *ngIf="f['password'].touched && f['password'].invalid"
+          class="alert alert-danger"
+        >
+          <div *ngIf="f['password'].errors && f['password'].errors['required']">
+            Password is required.
+          </div>
+        </div> -->
+      </div>
+
+      <div class="form-group">
+        <div class="column">
+          <button
+            type="submit"
+            class="btn mr-2 btn-outline-primary"
+            [disabled]="!authForm.valid"
+          >
+            Login
+          </button>
+          <!-- <button type="button" class="btn mr-2 btn-outline-primary">Forgot password?</button> -->
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

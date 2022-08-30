@@ -1,0 +1,38 @@
+<nav class="navbar d-flex justify-content-center navbar-light bg-light">
+  <form class="form-inline" [formGroup]="searchForm">
+      <div class="form-group">
+
+        <input
+        class="form-control mr-sm-2"
+        id="searchingBar"
+        type="text"
+        placeholder="Recipes search"
+        aria-label="Search"
+        formControlName="recipeTitle"
+        [(ngModel)]="recipeTitle">
+
+        <button
+        class="btn btn-outline-success m-2 my-sm-0"
+        type="submit"
+        [routerLink]="['/searching']"
+        [queryParams]="{recipeTitle}"
+        (click)="sendData()"
+        routerLinkActive="router-link-active">Search</button>
+
+        <!-- <button
+        class="btn btn-outline-success m-2 my-sm-0"
+        type="submit"
+        [routerLink]="['/searching']"
+        (click)="sendData()"
+        routerLinkActive="router-link-active">Search</button> -->
+
+        <button
+        class="btn btn-outline-success
+        m-2 my-sm-0"
+        type="submit"
+        [routerLink]="['/advancedSearch']"
+        routerLinkActive="router-link-active">Advanced search</button>
+
+      </div>
+  </form>
+</nav>

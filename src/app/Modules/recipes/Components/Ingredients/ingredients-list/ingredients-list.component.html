@@ -1,0 +1,39 @@
+<div class="container p-5">
+  <h2>Ingredient list</h2>
+  <ul class="list-group">
+    <li
+      class="list-group-item"
+      *ngFor="let ingredient of ingredients; let i = index"
+    >
+      <div
+        *ngIf="selectedId != ingredient.id; else editInput"
+        class="row justify-content-between align-items-center mr-1 ml-1"
+      >
+        <div>
+          {{ ingredient?.name }}
+        </div>
+        <div>
+          <button
+            type="button"
+            class="btn btn-outline-primary"
+            (click)="onEditClick(ingredient.id)"
+          >
+            Edit
+          </button>
+        </div>
+      </div>
+      <ng-template #editInput>
+        <app-ingredients-edition></app-ingredients-edition>
+      </ng-template>
+    </li>
+    <li
+      *ngIf="addClick"
+      class="list-group-item d-flex justify-content-center align-items-center"
+    >
+      <app-ingredients-creation></app-ingredients-creation>
+    </li>
+    <button type="button" class="btn btn-info" (click)="onAddClick()">+</button>
+  </ul>
+</div>
+
+<!-- <router-outlet></router-outlet> -->

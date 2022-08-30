@@ -1,0 +1,52 @@
+<div class="container justify-content-center">
+  <!-- <div class="row align-items-center"> -->
+  <div
+    class="row"
+    style="width: 100%"
+    *ngIf="comments.length == 0; else commentsList"
+  >
+    No comments found.
+  </div>
+
+  <ng-template #commentsList>
+    <div style="width: 100%">
+      <div
+        class="card border-light mb-2"
+        *ngFor="let comment of comments; let i = index"
+      >
+        <div class="card-header">
+          {{ comment.memberNickname }}
+          <div class="card-text text-right">
+            <small class="text-muted">{{
+              comment.creationDate | date: "MMM d, y"
+            }}</small>
+            <div *ngIf="islogged">
+              <a
+                class="text-muted"
+                href=""
+                (click)="onDisaprove(comment, comments[i].id)"
+                ><small class="text-muted"><b>Disaprove</b></small></a
+              >
+            </div>
+          </div>
+        </div>
+        <div class="card-body text-dark">
+          <p class="card-text">{{ comment.commentText }}</p>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <div *ngIf="islogged && !isDisappeared">
+    <button
+      class="btn btn-outline-primary"
+      [routerLink]="['creation']"
+      (click)="onAdding()"
+    >
+      Add a comment
+    </button>
+  </div>
+
+  <router-outlet></router-outlet>
+  <!-- </div> -->
+</div>

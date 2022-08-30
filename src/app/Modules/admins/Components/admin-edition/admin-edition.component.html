@@ -1,0 +1,145 @@
+<div class="container p-5">
+
+  <form action="" [formGroup]="editAdminForm" (ngSubmit)="onSaving()">
+    <div class="row align-items-center justify-content-center">
+      <div class="card">
+        <div class="p-5">
+
+          <img [src]="userPhoto" *ngIf="isPhotoloaded; else noPhoto" class="card-img-top" alt="Your avatar photo.">
+          <ng-template #noPhoto>
+            <img src="" style="size: 50%;" class="card-img-top" alt="No photo uploaded.">
+          </ng-template>
+
+          <div class="row justify-content-end">
+            <h5 class="card-title">Member since {{memberLogged?.creationDate | date: 'MMM d, y'}}</h5>
+          </div>
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-md-4 mb-2">
+                <label for="nickName">NickName: </label>
+                <input type="text" formControlName="nickName" id="nickName" class="form-control">
+                <div *ngIf="f['nickName'].touched && f['nickName'].invalid" class="alert alert-danger">
+                  <div *ngIf="f['nickName'].errors && f['nickName'].errors['required']">
+                    Nick name is required.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-md-4 mb-2">
+                <label for="firstName">First name: </label>
+                <input type="text" formControlName="firstName" id="firstName" class="form-control">
+                <div *ngIf="f['firstName'].touched && f['firstName'].invalid" class="alert alert-danger">
+                  <div *ngIf="f['firstName'].errors && f['firstName'].errors['required']">
+                    First name is required.
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-2">
+                <label for="lastName">Last name: </label>
+                <input type="text" formControlName="lastName" id="lastName" class="form-control">
+                <div *ngIf="f['lastName'].touched && f['lastName'].invalid" class="alert alert-danger">
+                  <div *ngIf="f['lastName'].errors && f['lastName'].errors['required']">
+                    Last name is required.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-md-4 mb-2">
+                <label for="email">E-mail: </label>
+                <input type="email" formControlName="email" id="email" class="form-control">
+                <div *ngIf="f['email'].touched && f['email'].invalid" class="alert alert-danger">
+                  <div *ngIf="f['email'].errors && f['email'].errors['required']">
+                    E-mail is required.
+                  </div>
+                  <div *ngIf="f['email'].errors && f['email'].errors['email']">
+                    Invalid E-mail.
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-2">
+                <label for="pass">Password: </label>
+                <input type="password" formControlName="password" id="pass" class="form-control">
+                <div *ngIf="f['password'].touched && f['password'].invalid" class="alert alert-danger">
+                  <div *ngIf="f['password'].errors && f['password'].errors['required']">
+                    Password is required.
+                  </div>
+                  <div *ngIf="f['password'].errors && f['password'].errors['pattern']">
+                    Password must have at least: 8 characters, 1 numeric character, 1 lowercase letter, 1 uppercase
+                    letter,
+                    1
+                    special character.
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-2">
+                <label for="passwordConfirmation">Confirm password: </label>
+                <input type="password" formControlName="passwordConfirmation" id="passwordConfirmation"
+                  class="form-control">
+                <div *ngIf="f['passwordConfirmation'].touched && f['passwordConfirmation'].invalid"
+                  class="alert alert-danger">
+                  <div *ngIf="f['passwordConfirmation'].errors && f['passwordConfirmation'].errors['required']">
+                    Password confirmation is required.
+                  </div>
+                  <div *ngIf="f['passwordConfirmation'].errors && f['passwordConfirmation'].errors['passwordMismatch']">
+                    The passwords does not match.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="form-group">
+            <div class="form-row justify-content-center">
+              <div class="col-md-4 mb-2">
+                <label for="birthDate">Birth date:</label>
+                <input type="date" formControlName="birthDate" id="birthDate" class="form-control">
+                <div *ngIf="f['birthDate'].touched && f['birthDate'].invalid" class="alert alert-danger">
+                  <div *ngIf="f['birthDate'].errors && f['birthDate'].errors['required']">
+                    Birth day date is required.
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-2">
+                <label for="gender">Gender: </label>
+                <select class="custom-select" formControlName="gender" id="gender" required>
+                  <option selected disabled value="">Select a gender</option>
+                  <option *ngFor="let gender of genders, let i = index" [ngValue]="i">{{gender}}</option>
+                </select>
+                <div *ngIf="f['gender'].touched && f['gender'].invalid" class="alert alert-danger">
+                  <div *ngIf="f['gender'].errors && f['gender'].errors['required']">
+                    Gender is required.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- https://stackoverflow.com/questions/39474188/angular-cast-select-value-to-int -->
+
+
+          <div class="form-group">
+            <div class="card-body">
+              <div class="row justify-content-between m-2">
+                <button type="submit" class="btn btn-success" [disabled]="!editAdminForm.valid">Save changes</button>
+                <button class="btn btn-outline-danger" [routerLink]="['/adminAccess/' + loggedMemberId]">Cancel</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </form>
+
+</div>

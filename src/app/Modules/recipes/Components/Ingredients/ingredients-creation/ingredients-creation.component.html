@@ -1,0 +1,13 @@
+<div class="container">
+  <form action="" [formGroup]="ingredientForm" (ngSubmit)="save()">
+    <div class="row">
+      <input type="text" name="name" id="name" formControlName="name">
+      <div *ngIf="f['name'].touched && f['name'].invalid" class="alert alert-danger">
+        <div *ngIf="f['name'].errors && f['name'].errors['required']">
+          Name cannot be empty.
+        </div>
+      </div>
+      <button type="submit" class="btn btn-success">Ok</button>
+    </div>
+  </form>
+</div>

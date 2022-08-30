@@ -1,0 +1,304 @@
+<div class="container p-5">
+  <div class="row justify-content-center m-3">
+    <h2>Here, you can create a recipe to be shared with us.</h2>
+  </div>
+  <form action="" [formGroup]="recipeForm" (ngSubmit)="createRecipe()">
+    <div class="p-5">
+      <!-- photo upload -->
+      <div class="form-group">
+        <div class="form-row">
+          <div class="col mb-2">
+            <!-- <label for="title">Title: </label> -->
+            <input
+              type="text"
+              formControlName="title"
+              id="title"
+              class="form-control"
+              placeholder="Recipe title"
+            />
+            <div
+              *ngIf="f['title'].touched && f['title'].invalid"
+              class="alert alert-danger"
+            >
+              <div *ngIf="f['title'].errors && f['title'].errors['required']">
+                Title name is required.
+              </div>
+              <div *ngIf="f['title'].errors && f['title'].errors['maxLength']">
+                Title can't be larger than 35 characters long.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="form-row">
+          <div class="col-md-3 mb-2">
+            <!-- <label for="category">Category: </label> -->
+            <select
+              class="custom-select"
+              formControlName="category"
+              id="category"
+              required
+            >
+              <option selected disabled value="">Category</option>
+              <option
+                *ngFor="let category of categories; let i = index"
+                [ngValue]="i"
+              >
+                {{ category }}
+              </option>
+            </select>
+            <div
+              *ngIf="f['category'].touched && f['category'].invalid"
+              class="alert alert-danger"
+            >
+              <div
+                *ngIf="f['category'].errors && f['category'].errors['required']"
+              >
+                Choose a category.
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 mb-2">
+            <!-- <label for="duration">Duration: </label> -->
+            <input
+              type="text"
+              formControlName="duration"
+              id="duration"
+              class="form-control"
+              placeholder="Duration (hh:mm or mm:ss)"
+            />
+            <div
+              *ngIf="f['duration'].touched && f['duration'].invalid"
+              class="alert alert-danger"
+            >
+              <div
+                *ngIf="f['duration'].errors && f['duration'].errors['required']"
+              >
+                Time recipe takes to be done is required (hh:mm or mm:ss).
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 mb-2">
+            <!-- <label for="servings">Servings: </label> -->
+            <input
+              type="number"
+              formControlName="servings"
+              id="servings"
+              class="form-control"
+              placeholder="Servings"
+            />
+            <div
+              *ngIf="f['servings'].touched && f['servings'].invalid"
+              class="alert alert-danger"
+            >
+              <div
+                *ngIf="f['servings'].errors && f['servings'].errors['required']"
+              >
+                Serving number is required. Can be serving units or persons.
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 mb-2">
+            <!-- <label for="difficulty">difficulty: </label> -->
+            <select
+              class="custom-select"
+              formControlName="difficulty"
+              id="difficulty"
+              required
+            >
+              <option selected disabled value="">Difficulty level</option>
+              <option *ngFor="let level of levels; let i = index" [ngValue]="i">
+                {{ level }}
+              </option>
+            </select>
+            <div
+              *ngIf="f['difficulty'].touched && f['difficulty'].invalid"
+              class="alert alert-danger"
+            >
+              <div
+                *ngIf="
+                  f['difficulty'].errors && f['difficulty'].errors['required']
+                "
+              >
+                Requisited experience level is required.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="form-row">
+          <div class="col mb-2">
+            <!-- <label for="description">Description:</label> -->
+            <textarea
+              type="text"
+              formControlName="description"
+              id="description"
+              class="form-control"
+              placeholder="Instruction steps to make this recipe"
+            ></textarea>
+            <div
+              *ngIf="f['description'].touched && f['description'].invalid"
+              class="alert alert-danger"
+            >
+              <div
+                *ngIf="
+                  f['description'].errors && f['description'].errors['required']
+                "
+              >
+                Instructions text is required.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- //INGREDIENTS FORM : have to replicate as adding ingredient -->
+      <!-- 1a tentativa -->
+      <!-- <div class="form-group" formArrayName="ingredientCompoList">
+          <h4>Recipe ingredient composition</h4>
+          <button type="button" class="btn btn-outline-info" (click)="addIngredientCompo()">Add ingredient</button>
+          <div *ngFor="let ingredient of ingredientCompoList.controls; let i = index" class="form-row justify-content-end">
+            <div class="col mb-2">
+              <input type="text" name="ingredient - {{i}}" [formControlName]="i" placeholder="Ingredient">
+            </div>
+          </div>
+        </div> -->
+
+      <!-- 2a tentativa -->
+      <!-- nivel array -->
+      <!-- <div class="form-group" formArrayName="ingredientCompoList">
+            <h4>Recipe ingredient composition</h4>
+            <button type="button" class="btn btn-outline-info" (click)="addIngredientCompo()">Add ingredient</button>
+
+            <div *ngFor="let ingredient of ingredientCompoList.controls; let i = index" class="form-row justify-content-end">
+              <div class="col mb-2" [formGroupName]="i"> -->
+      <!-- declarar o objeto group -->
+      <!-- <input type="text" name="name"  formControlName="name" placeholder="name">
+                <input type="number" name="quantity" formControlName="quantity" placeholder="quantity">
+                <input type="text" name="unit" formControlName="unit" placeholder="unit">
+              </div>
+            </div>
+        </div> -->
+
+      <!-- 3a tentativa -->
+
+      <div class="row justify-content-between m-2">
+        <blockquote class="blockquote">
+          <p class="mb-0">Recipe ingredient composition</p>
+          <footer class="blockquote-footer">Add at least one ingredient</footer>
+        </blockquote>
+        <button
+          type="button"
+          class="btn btn-outline-primary m-4"
+          (click)="addIngredientCompo()"
+        >
+          Add
+        </button>
+      </div>
+
+      <div formGroupName="ingredientCompoList">
+        <div
+          *ngFor="
+            let ingredientCompo of ingredientCompoList.controls;
+            let i = index
+          "
+        >
+          <div class="form-group" [formGroupName]="i">
+            <div class="form-row">
+              <div class="col-md-3 mb-2">
+                <select
+                  class="custom-select"
+                  formControlName="ingredientId"
+                  id="ingredientId"
+                  required
+                >
+                  <option selected disabled value="">Ingredient</option>
+                  <option
+                    *ngFor="let ingredient of ingredientList; let i = index"
+                    [ngValue]="ingredient.id"
+                  >
+                    {{ ingredient.name }}
+                  </option>
+                </select>
+              </div>
+              <!-- associate ingredient id to selected name -->
+              <div class="col-md-3 mb-2">
+                <!-- <label for="passwordConfirmation">Confirm password: </label> -->
+                <input
+                  type="number"
+                  formControlName="quantity"
+                  id="passwordConfirmation"
+                  class="form-control"
+                  placeholder="Quantity"
+                />
+              </div>
+              <div class="col-md-3 mb-2">
+                <select
+                  class="custom-select"
+                  formControlName="unit"
+                  id="unit"
+                  required
+                >
+                  <option selected disabled value="">Measurement unit</option>
+                  <option
+                    *ngFor="let measurementUnit of units; let i = index"
+                    [ngValue]="i"
+                  >
+                    {{ measurementUnit }}
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-3 mb-2">
+                <button
+                  type="button"
+                  class="btn btn-outline-danger"
+                  (click)="deleteIngredientCompo(i)"
+                >
+                  <i class="bi bi-trash"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- https://stackoverflow.com/questions/39474188/angular-cast-select-value-to-int -->
+
+      <div class="form-group">
+        <div class="form-row justify-content-end">
+          <div class="column">
+            <button
+              type="submit"
+              class="btn mr-2 btn-outline-primary"
+              [disabled]="!recipeForm.valid"
+            >
+              Submit
+            </button>
+            <button
+              type="button"
+              class="btn mr-2 btn-outline-danger"
+              (click)="clearForm()"
+            >
+              Clear
+            </button>
+            <button
+              class="btn btn-outline-danger"
+              [routerLink]="['/memberAccess/' + loggedId]"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <hr />
+  Form value = {{ recipeForm.value | json }}
+  <hr />
+  Form state = {{ recipeForm.status }}
+</div>

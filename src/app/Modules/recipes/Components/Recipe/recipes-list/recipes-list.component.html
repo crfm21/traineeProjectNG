@@ -1,0 +1,45 @@
+<div class="container">
+  <h1 *ngIf="recipeStateSelected == undefined">Recipes</h1>
+  <h1 *ngIf="recipeStateSelected == 'published'">Your published Recipes</h1>
+  <h1 *ngIf="recipeStateSelected == 'toReview'">Your recipes to review</h1>
+  <h1 *ngIf="recipeStateSelected == 'favorites'">Your favorite recipes</h1>
+
+  <div *ngIf="recipes?.length == 0; else recipesList" class="">
+    No recipes found.
+  </div>
+  <ng-template #recipesList>
+    <table class="table table-bordered"
+      *ngIf="loggedAdminId == undefined || recipeStateSelected !== 'toReview'; else forReview">
+      <tr *ngFor="let recipe of recipes">
+        <td>
+          <a href="" [routerLink]="['/details/' + recipe.id]">{{recipe?.title}}</a>
+        </td>
+        <!-- <td> get the image as thumbnail: pb: does not load as an array
+          <img [src]="allRecipePhotos" *ngIf="isPhotoloaded; else noPhoto" class="img-thumbnail" alt="Your avatar photo.">
+          <ng-template #noPhoto>
+            <img src="" style="size: 50%;" class="img-thumbnail"
+            alt="No photo uploaded.">
+          </ng-template>
+        </td> -->
+      </tr>
+    </table>
+    <ng-template #forReview>
+      <table class="table table-bordered">
+        <tr *ngFor="let recipe of recipes">
+          <td>
+            <a href="" [routerLink]="['/adminAccess/' + loggedAdminId + '/reviewRecipe/', + recipe.id]">{{recipe?.title}}</a>
+          </td>
+          <!-- <td>
+            <img [src]="allRecipePhotos" *ngIf="isPhotoloaded; else noPhoto" class="img-thumbnail" alt="Your avatar photo.">
+            <ng-template #noPhoto>
+              <img src="" style="size: 50%;" class="img-thumbnail"
+              alt="No photo uploaded.">
+            </ng-template>
+          </td> -->
+        </tr>
+      </table>
+    </ng-template>
+
+  </ng-template>
+
+</div>

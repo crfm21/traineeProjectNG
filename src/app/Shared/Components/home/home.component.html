@@ -1,0 +1,18 @@
+<div class="container mt-5 mb-5 d-flex justify-content-center">
+  <div class="row align-items-center justify-content-center">
+    <div *ngFor="let category of categories; let i = index" class="col-4">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="text-center">
+            <a
+              href="#"
+              class="card-link"
+              [routerLink]="['/searching/category/' + i]"
+              >{{ categories[i] }}</a
+            >
+          </h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

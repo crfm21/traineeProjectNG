@@ -1,0 +1,52 @@
+<div class="container">
+  <h1 *ngIf="memberStatus == 'activeMembers'">Active members</h1>
+  <h1 *ngIf="memberStatus == 'bannedMembers'">Banned members</h1>
+
+  <div *ngIf="users?.length == 0; else usersList" class="">
+    No
+    <span *ngIf="memberStatus == 'activeMembers'">active</span>
+    <span *ngIf="memberStatus == 'bannedMembers'">banned</span>
+    users found.
+  </div>
+  <ng-template #usersList>
+    <table
+      class="table table-bordered justify-content-center align-items-center"
+    >
+      <tr *ngFor="let user of users">
+        <!-- <td class="col-4">{{ user.userPhotoPath }}</td> -->
+        <td class="col-7">
+          <a
+            href=""
+            [routerLink]="[
+              '/adminAccess/' +
+                loggedAdminId +
+                '/' +
+                this.memberStatus +
+                '/memberProfile/' +
+                user.id
+            ]"
+            >{{ user?.firstName }} {{ user?.lastName }}</a
+          >
+        </td>
+        <td class="col-1">
+          <button class="btn btn-danger" (click)="onBanning(user, user.id)">
+            Ban
+          </button>
+        </td>
+      </tr>
+    </table>
+  </ng-template>
+  <!-- <div class="row justify-center">
+      <div class="col-4">
+        <div class="list-group" id="list-tab" role="tablist"
+        *ngFor="let recipe of recipes">
+          <a class="list-group-item list-group-item-action" id="list-home-list" data-toggle="list" role="tab" aria-controls="home" [routerLink]="['/details', + recipe.id]">{{recipe.title}}</a>
+        </div>
+      </div>
+      <div class="col-8">
+        <div class="tab-content" id="nav-tabContent">
+          <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">...</div>
+        </div>
+      </div>
+    </div> -->
+</div>

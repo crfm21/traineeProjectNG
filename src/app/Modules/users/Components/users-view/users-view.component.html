@@ -1,0 +1,155 @@
+<div class="container p-5">
+  <div class="row align-items-center justify-content-center">
+    <div class="card p-3" style="min-width: 70%">
+      <div class="row justify-content-center">
+        <div class="col-sm-5">
+          <img
+            [src]="userPhoto"
+            *ngIf="isPhotoloaded; else noPhoto"
+            class="img-thumbnail"
+            alt="Your avatar photo."
+          />
+          <ng-template #noPhoto>
+            <a
+              style="cursor: pointer"
+              *ngIf="!isClicked; else upload"
+              (click)="isClicked = true"
+            >
+              <img
+                src=""
+                style="size: 50%"
+                class="card-img-top"
+                alt="No photo uploaded."
+              />
+            </a>
+
+            <ng-template #upload>
+              <div class="row justify-content-between">
+                <div class="col-4">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    (change)="selectPhoto($event)"
+                  />
+                </div>
+                <div class="col-4">
+                  <button
+                    class="btn btn-success btn-sm"
+                    [disabled]="!photoToUpload"
+                    (click)="uploadPhoto()"
+                  >
+                    Confirm
+                  </button>
+                </div>
+                <div class="col-4">
+                  <button
+                    class="btn btn-danger btn-sm"
+                    (click)="reloadCurrentRoute()"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+              <div class="row justify-content-center m-2">
+                <div class="col">
+                  <img
+                    [src]="localUrl"
+                    *ngIf="localUrl"
+                    alt=""
+                    class="imgPlaceholder"
+                  />
+                </div>
+              </div>
+            </ng-template>
+          </ng-template>
+        </div>
+        <div class="col-sm-7">
+          <div class="card-body">
+            <div class="row justify-content-end">
+              <small class="card-title"
+                >Member since
+                {{ memberLogged?.creationDate | date: "MMM d, y" }}</small
+              >
+            </div>
+            <p class="card-text">
+              {{ memberLogged?.nickName }} - {{ memberAge }}
+            </p>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              {{ memberLogged?.firstName }} {{ memberLogged?.lastName }}
+            </li>
+            <li class="list-group-item">{{ memberLogged?.email }}</li>
+          </ul>
+        </div>
+      </div>
+
+      <div
+        class="card-body"
+        *ngIf="loggedAdminId == undefined; else adminAccess"
+      >
+        <div class="row justify-content-center m-1">
+          <a href="" class="card-link" routerLink="edit">Edit profile</a>
+          <a
+            href=""
+            class="card-link"
+            [routerLink]="['/recipeCreation/' + this.loggedMemberId]"
+            >Create Recipe</a
+          >
+          <a href="" class="card-link" routerLink="recipes/published"
+            >Published recipes
+            <span class="badge badge-pill badge-info">{{ pubRecipes }}</span></a
+          >
+
+          <a href="" class="card-link" routerLink="recipes/toReview"
+            >Recipes to review
+            <span class="badge badge-pill badge-warning">{{
+              recipesToReview
+            }}</span></a
+          >
+          <a href="" class="card-link" routerLink="recipes/favorites"
+            >Favorite Recipes
+            <span
+              class="badge badge-pill"
+              style="background-color: pink; color: white"
+              >{{ favRecipes }}</span
+            ></a
+          >
+        </div>
+      </div>
+      <ng-template #adminAccess>
+        <div class="row justify-content-center m-1">
+          <a
+            href=""
+            class="card-link"
+            [routerLink]="[
+              '/adminAccess/' +
+                loggedAdminId +
+                '/activeMembers/memberProfile/' +
+                memberIdSelected +
+                '/published'
+            ]"
+            >Published recipes
+            <span class="badge badge-pill badge-info">{{ pubRecipes }}</span></a
+          >
+          <a
+            href=""
+            class="card-link"
+            [routerLink]="[
+              '/adminAccess/' +
+                loggedAdminId +
+                '/activeMembers/memberProfile/' +
+                memberIdSelected +
+                '/toReview'
+            ]"
+            >Recipes to review
+            <span class="badge badge-pill badge-warning">{{
+              recipesToReview
+            }}</span></a
+          >
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>
+<router-outlet></router-outlet>
